@@ -1,10 +1,11 @@
-import { createBrowserRouter, Navigate } from "react-router";
+import { createHashRouter, Navigate } from "react-router";
 import { PokedexLayout } from "@/pokedex/layouts/PokedexLayout";
 import { WelcomePage } from "@/welcome/pages/WelcomePage";
 import { PokemonsPage } from "@/pokedex/pages/PokemonsPage";
 import { DataExists, NotDataExists } from "./routes/ProtectedRoutes";
 
-export const appRouter = createBrowserRouter([
+// export const appRouter = createBrowserRouter([
+export const appRouter = createHashRouter([
   {
     path: "/",
     element: (
