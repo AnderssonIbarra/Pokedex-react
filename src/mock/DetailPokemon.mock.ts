@@ -1,6 +1,4 @@
-import type { Pokemon } from "../interfaces/pokemon.response";
-
-export const DetailPokemon: Pokemon = {
+export const DetailPokemon = {
   abilities: [
     {
       ability: {
