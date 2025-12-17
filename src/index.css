@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme{
+    --font-lato: "Lato", sans-serif;
+    --color-gray-normal: #5e5e5e;
+    --color-gray-bold: #353535;
+    --color-red-normal: #f22539;
+    --color-red-bold: #c00e20;
+    --color-bone: #f9f9f9;
+}

@@ -1,0 +1,65 @@
+import { useRef, useState, useEffect, type KeyboardEvent } from "react";
+import { useSearchParams } from "react-router";
+
+export const CustomSearch = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const searchQuery = searchParams.get("pokemon") || "";
+
+  const handlerSearch = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key !== "Enter") return;
+
+    const newSearchParams = new URLSearchParams();
+
+    const query = inputRef.current?.value;
+
+    if (!query) {
+      newSearchParams.delete("pokemon");
+    } else {
+      newSearchParams.set("pokemon", query);
+    }
+
+    setSearchParams(newSearchParams);
+    setIsDisabled(true);
+  };
+
+  // Limpiar el input cuando se cierre el modal
+  useEffect(() => {
+    const pokemon = searchParams.get("pokemon");
+    if (!pokemon && inputRef.current) {
+      inputRef.current.value = "";
+      setIsDisabled(false);
+    }
+  }, [searchParams]);
+
+  return (
+    <div className="relative">
+      <span>
+        <svg
+          className="absolute -translate-y-2/4 w-4.5 h-4.5 left-4.5 top-2/4"
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M17.7552 15.5622L14.2499 12.0574C14.0917 11.8992 13.8772 11.8113 13.6522 11.8113H13.0791C14.0495 10.5705 14.6261 9.00967 14.6261 7.31179C14.6261 3.27273 11.3528 0 7.31304 0C3.27329 0 0 3.27273 0 7.31179C0 11.3508 3.27329 14.6236 7.31304 14.6236C9.01121 14.6236 10.5723 14.0471 11.8134 13.0768V13.6498C11.8134 13.8748 11.9013 14.0892 12.0595 14.2474L15.5648 17.7522C15.8953 18.0826 16.4297 18.0826 16.7567 17.7522L17.7517 16.7573C18.0822 16.4269 18.0822 15.8926 17.7552 15.5622ZM7.31304 11.8113C4.82731 11.8113 2.81271 9.80061 2.81271 7.31179C2.81271 4.82648 4.82379 2.81223 7.31304 2.81223C9.79876 2.81223 11.8134 4.82297 11.8134 7.31179C11.8134 9.79709 9.80228 11.8113 7.31304 11.8113Z"
+            fill="#BFBFBF"
+          />
+        </svg>
+      </span>
+      <input
+        type="text"
+        className="text-gray-normal focus:outline-2 focus:outline-gray-normal bg-white w-68 h-12.5 pl-10.5 rounded-[5px] md:w-140 shadow-[0px_2px_10px_rgba(0,0,0,0.04)] disabled:opacity-50 disabled:cursor-not-allowed"
+        placeholder="Search"
+        ref={inputRef}
+        onKeyDown={(event) => handlerSearch(event)}
+        defaultValue={searchQuery}
+        disabled={isDisabled}
+      />
+    </div>
+  );
+};
